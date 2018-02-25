@@ -640,8 +640,8 @@ public class MainController {
         // Check if we have all the settings required
         if (SETTING_HORIZON_DB_ADDRESS.isEmpty() ||
             SETTING_HORIZON_DB_PORT.isEmpty() ||
-            SETTING_HORIZON_DB_USER.isEmpty() ||
-            SETTING_HORIZON_DB_PASS.isEmpty()) {
+            SETTING_HORIZON_DB_USER.isEmpty()/* ||
+            SETTING_HORIZON_DB_PASS.isEmpty()*/) {
             showError("You must specify all required connection settings in order to use a Horizon node database.");
 
             return false;

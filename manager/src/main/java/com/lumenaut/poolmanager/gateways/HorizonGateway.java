@@ -98,7 +98,7 @@ public class HorizonGateway {
         props.setProperty("password", SETTING_HORIZON_DB_PASS);
 
         // Core database connection
-        conn = DriverManager.getConnection(horizonNodeDatabaseUrl.toString() + "/core", props);
+        conn = DriverManager.getConnection(horizonNodeDatabaseUrl.toString() + "/testcore", props);
         connected = true;
     }
 
@@ -133,7 +133,7 @@ public class HorizonGateway {
     public boolean isTestNetwork() throws SQLException {
         // Prepared statement
         final Statement stm = conn.createStatement();
-        final String checkNetworkSQL = "SELECT * FROM core.public.storestate WHERE statename = 'networkpassphrase'";
+        final String checkNetworkSQL = "SELECT * FROM testcore.public.storestate WHERE statename = 'networkpassphrase'";
 
         // Extract results
         final ResultSet checkNetworkRS = stm.executeQuery(checkNetworkSQL);
@@ -167,7 +167,7 @@ public class HorizonGateway {
         final long poolBalance = getBalance(inflationDestination);
 
         // Prepared statement
-        final PreparedStatement inflationStm = conn.prepareStatement("SELECT * FROM core.public.accounts WHERE inflationdest = ?");
+        final PreparedStatement inflationStm = conn.prepareStatement("SELECT * FROM testcore.public.accounts WHERE inflationdest = ?");
         inflationStm.setString(1, inflationDestination);
         inflationStm.setFetchSize(50);  // Fetch in batches of 50 records
 
@@ -242,7 +242,7 @@ public class HorizonGateway {
     public HashMap<String, HashMap<String, String>> getVotersCustomData(final String inflationDestination, final String... dataNames) throws SQLException {
         // Build the query
         sb.setLength(0);
-        sb.append("SELECT * FROM core.public.accounts LEFT JOIN core.public.accountdata ON accountdata.accountid = accounts.accountid WHERE inflationdest = ?");
+        sb.append("SELECT * FROM testcore.public.accounts LEFT JOIN testcore.public.accountdata ON accountdata.accountid = accounts.accountid WHERE inflationdest = ?");
 
         if (dataNames.length > 1) {
             sb.append(" AND (");
@@ -317,7 +317,7 @@ public class HorizonGateway {
      */
     public Long getBalance(final String accountId) throws SQLException {
         // Prepared statement
-        final PreparedStatement inflationStm = conn.prepareStatement("SELECT * FROM core.public.accounts WHERE accountid = ? LIMIT 1");
+        final PreparedStatement inflationStm = conn.prepareStatement("SELECT * FROM testcore.public.accounts WHERE accountid = ? LIMIT 1");
         inflationStm.setString(1, accountId);
 
         // Extract results
